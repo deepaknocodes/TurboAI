@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Select Section
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='select.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="box">
+
+        <h1>
+
+            Select Your Section
+
+        </h1>
+
+        <p>
+
+            Choose your course, year and section
+
+        </p>
+
+
+
+
+
+        <form method="POST">
+
+
+
+            <!-- COURSE -->
+
+            <select name="course" required>
+
+                <option value="">
+
+                    Select Course
+
+                </option>
+
+                {% for course in courses %}
+
+                <option value="{{ course.name }}">
+
+                    {{ course.name }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+
+
+
+            <!-- YEAR -->
+
+            <select name="year" required>
+
+                <option value="">
+
+                    Select Year
+
+                </option>
+
+                {% for year in years %}
+
+                <option value="{{ year.name }}">
+
+                    {{ year.name }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+
+
+
+            <!-- SECTION -->
+
+            <select name="section" required>
+
+                <option value="">
+
+                    Select Section
+
+                </option>
+
+                {% for section in sections %}
+
+                <option value="{{ section.name }}">
+
+                    {{ section.name }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+
+
+
+            <button type="submit">
+
+                Continue
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

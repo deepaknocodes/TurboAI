@@ -1,0 +1,110 @@
+{% extends 'navigationAdmin.html' %}
+
+{% block extra_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='year.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1 class="page-title">{{ year.name }}</h1>
+                <p class="page-subtitle">Create and manage sections</p>
+            </div>
+            
+            <div class="admin-greeting">
+                <div class="greeting-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <span>Welcome, <strong>{{ username }}</strong></span>
+            </div>
+        </div>
+
+        <!-- Create Section Card -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2 class="card-title">Create Section</h2>
+            </div>
+
+            <form method="POST" action="/create-section" class="section-form">
+                <input type="hidden" name="year_id" value="{{ year.id }}">
+                
+                <div class="input-group">
+                    <label for="section-name" class="input-label">Section Name</label>
+                    <div class="input-wrap">
+    <input
+        type="text"
+        id="section-name"
+        name="section"
+        class="input-field"
+        placeholder="Enter section name (e.g., A, B, C)"
+        required
+        minlength="1"
+        maxlength="50"
+    >
+</div>
+                    <p class="input-hint">Enter a unique identifier for this section</p>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Create Section</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Sections Grid -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2 class="card-title">Sections</h2>
+                <span class="item-count">{{ sections|length }}</span>
+            </div>
+
+            {% if sections|length > 0 %}
+                <div class="sections-grid">
+                    {% for section in sections %}
+                        <a href="/section/{{ section.id }}" class="section-card">
+                            <div class="section-card-header">
+                                <div class="section-badge">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="section-title">Section {{ section.name }}</h3>
+                            </div>
+                            <p class="section-meta">Open Section</p>
+                            
+                            <div class="section-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <p class="empty-message">No sections created yet</p>
+                    <p class="empty-hint">Create your first section to get started</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}

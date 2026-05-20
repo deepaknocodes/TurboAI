@@ -1,0 +1,83 @@
+{% extends 'navigationAdmin.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='teachers.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="main-content">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div class="header-content">
+            <p class="page-eyebrow">Management</p>
+            <h1 class="page-title">Teachers</h1>
+            <p class="page-subtitle">View, manage, and assign timetables for all teachers</p>
+        </div>
+        <a href="/create-teacher-page" class="add-btn" title="Add Teacher">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="22" height="22"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </a>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+        <div class="stat-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <span>{{ teachers|length }} Teacher{{ 's' if teachers|length != 1 }}</span>
+        </div>
+    </div>
+
+    <!-- TEACHER LIST -->
+    <div class="dashboard-card">
+
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">All Teachers</h2>
+                <p class="card-sub">Click a teacher to view or edit their timetable</p>
+            </div>
+            <span class="course-count">{{ teachers|length }}</span>
+        </div>
+
+        <div class="item-list">
+
+            {% for teacher in teachers %}
+            <a href="/teacher/{{ teacher.id }}" class="item-card">
+
+                <!-- Avatar -->
+                <div class="teacher-avatar">
+                    {{ teacher.name[0].upper() }}
+                </div>
+
+                <!-- Info -->
+                <div class="item-content">
+                    <p class="item-title">{{ teacher.name }}</p>
+                    <p class="item-meta">View Timetable</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="item-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </div>
+
+            </a>
+            {% else %}
+
+            <!-- Empty state -->
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <p class="empty-message">No teachers added yet</p>
+                <p class="empty-hint">Click the <strong>+</strong> button to add your first teacher.</p>
+                <a href="/create-teacher-page" class="empty-cta">Add Teacher</a>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock body %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turbo AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <main class="home-container">
+
+        <!-- Logo mark -->
+        <div class="logo-mark">T</div>
+
+        <!-- Heading -->
+        <h1 class="home-title">
+            Turbo <em>AI</em>
+        </h1>
+
+        <p class="home-sub">
+            AI-Powered College Management System
+        </p>
+
+        <!-- Divider -->
+        <div class="home-divider"></div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <a href="/signup" class="btn btn--primary">
+                Get Started
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="/login" class="btn btn--secondary">
+                Sign In
+            </a>
+        </div>
+
+        <!-- Footer note -->
+        <p class="home-note">🔒 Secure &middot; College-grade AI</p>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends 'navigationAdmin.html' %}
+
+{% block extra_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='createCourse.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1 class="page-title">Create Course</h1>
+                <p class="page-subtitle">Add a new course to your curriculum</p>
+            </div>
+        </div>
+
+        <!-- Create Course Card -->
+        <div class="dashboard-card">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash flash--{{ category if category == 'error' else 'success' }}">
+                            {% if category == 'error' %}
+                                <svg class="flash-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            {% else %}
+                                <svg class="flash-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            {% endif %}
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Form -->
+            <form method="POST" action="/create-course" class="course-form">
+                <!-- Course Name Input Group -->
+                <div class="input-group">
+                    <label for="course-name" class="input-label">Course Name</label>
+                    <input
+                        type="text"
+                        id="course-name"
+                        name="course"
+                        class="input-field"
+                        placeholder="Enter course name"
+                        required
+                        minlength="2"
+                        maxlength="100"
+                    >
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <span>Create Course</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock body %}

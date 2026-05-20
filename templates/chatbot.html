@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <title>Turbo AI</title>
+</head>
+<body>
+
+<div class="shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">T</div>
+
+        <nav class="sidebar-nav">
+            <a href="/" class="nav-item" title="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </a>
+            <a href="/chatbot" class="nav-item active" title="Chat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </a>
+            <a href="#" class="nav-item" title="Settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            </a>
+        </nav>
+
+        <a class="logout-btn" href="/logout" title="Logout">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </a>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="bot-avatar">
+                    <span>AI</span>
+                    <div class="online-dot"></div>
+                </div>
+                <div>
+                    <h1 class="bot-name">Turbo <em>AI</em></h1>
+                    <p class="bot-status">College Assistant &middot; Online</p>
+                </div>
+            </div>
+            <a href="/clear-chat" class="clear-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+                Clear chat
+            </a>
+        </header>
+
+        <!-- Messages -->
+        <div class="messages" id="messages">
+
+            {% if not chats %}
+            <div class="empty-state">
+                <div class="empty-glyph">✦</div>
+                <h2 class="empty-title">How can I help you today?</h2>
+                <p class="empty-sub">Ask about classes, schedule, fees, or teachers.</p>
+                <div class="chips">
+                    <button class="chip" type="button" onclick="fill(this)">Where is my class?</button>
+                    <button class="chip" type="button" onclick="fill(this)">Show my timetable</button>
+                    <button class="chip" type="button" onclick="fill(this)">What is my fee?</button>
+                    <button class="chip" type="button" onclick="fill(this)">Next lecture?</button>
+                    <button class="chip" type="button" onclick="fill(this)">Where is my teacher?</button>
+                </div>
+            </div>
+            {% endif %}
+
+            {% for chat in chats %}
+            <div class="msg-pair">
+                <!-- User -->
+                <div class="row row-user">
+                    <div class="bubble bubble-user">{{ chat.message }}</div>
+                </div>
+                <!-- Bot -->
+                <div class="row row-bot">
+                    <div class="bot-icon">AI</div>
+                    <div class="bubble bubble-bot">{{ chat.response }}</div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Input -->
+        <div class="input-wrap">
+            <form method="post" class="input-form">
+                <input
+                    type="text"
+                    name="message"
+                    id="msgInput"
+                    placeholder="Ask about your schedule, fees, or classes…"
+                    autocomplete="off"
+                    required
+                >
+                <button type="submit" class="send-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </form>
+            <div class="input-meta">
+                <span>🔒 Encrypted</span>
+                <span>·</span>
+                <span>Powered by Turbo AI</span>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const msgs = document.getElementById('messages');
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+
+    function fill(el) {
+        document.getElementById('msgInput').value = el.textContent.trim();
+        document.getElementById('msgInput').focus();
+    }
+</script>
+
+</body>
+</html>

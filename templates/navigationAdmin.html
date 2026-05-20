@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<div class="main-container">
+
+    <!-- =============================== -->
+    <!-- SIDEBAR -->
+    <!-- =============================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Toggle (mobile) -->
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <line x1="3" y1="6"  x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
+
+        <!-- Logo -->
+        <div class="logo-section">
+            <div class="logo-circle">T</div>
+            <div class="logo-info">
+                <h2 class="logo-text">Turbo AI</h2>
+                <p class="logo-subtitle">Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="sidebar-menu">
+
+            <!-- MAIN -->
+            <div class="menu-section">
+                <div class="menu-title">Main</div>
+
+                <a href="/admin" class="sidebar-link {% if request.path == '/admin' %}active{% endif %}">
+                    <span class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    </span>
+                    <span class="link-label">Dashboard</span>
+                    <span class="link-arrow">›</span>
+                </a>
+
+                <a href="/fees" class="sidebar-link {% if request.path == '/fees' %}active{% endif %}">
+                    <span class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    </span>
+                    <span class="link-label">Fee Management</span>
+                    <span class="link-arrow">›</span>
+                </a>
+            </div>
+
+            <!-- COURSES -->
+            <div class="menu-section">
+                <div class="menu-title clickable" onclick="toggleSection('courses')" id="coursesToggle">
+                    <span class="title-row">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                        Courses
+                    </span>
+                    <span class="toggle-arrow" id="coursesArrow">▾</span>
+                </div>
+
+                <div class="collapsible" id="coursesList">
+                    {% if courses %}
+                        {% for course in courses %}
+                        <a href="/course/{{ course.id }}" class="sidebar-link sidebar-link--sub">
+                            <span class="link-dot"></span>
+                            <span class="link-label">{{ course.name }}</span>
+                            <span class="link-arrow">›</span>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-sidebar-text">No courses yet</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- TEACHERS -->
+            <div class="menu-section">
+                <div class="menu-title clickable" onclick="toggleSection('teachers')" id="teachersToggle">
+                    <span class="title-row">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                        Teachers
+                    </span>
+                    <span class="toggle-arrow" id="teachersArrow">▾</span>
+                </div>
+
+                <div class="collapsible" id="teachersList">
+                    {% if teachers %}
+                        {% for teacher in teachers %}
+                        <a href="/teacher/{{ teacher.id }}" class="sidebar-link sidebar-link--sub">
+                            <span class="link-dot"></span>
+                            <span class="link-label">{{ teacher.name }}</span>
+                            <span class="link-arrow">›</span>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-sidebar-text">No teachers yet</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </nav>
+
+        <!-- Bottom -->
+        <div class="sidebar-bottom">
+            <div class="sidebar-divider"></div>
+            <a href="/logout" class="sidebar-link sidebar-link--logout">
+                <span class="link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                </span>
+                <span class="link-label">Logout</span>
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- OVERLAY (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT -->
+    <div class="page-wrapper">
+        {% block body %}{% endblock body %}
+    </div>
+
+</div>
+
+<script>
+// ── Collapsible sections ──────────────────
+const sectionState = { courses: true, teachers: true };
+
+function toggleSection(name) {
+    const el    = document.getElementById(name + 'List');
+    const arrow = document.getElementById(name + 'Arrow');
+    sectionState[name] = !sectionState[name];
+    el.classList.toggle('collapsed', !sectionState[name]);
+    arrow.style.transform = sectionState[name] ? 'rotate(0deg)' : 'rotate(-90deg)';
+}
+
+// ── Mobile sidebar ────────────────────────
+function toggleSidebar() {
+    const sidebar  = document.getElementById('sidebar');
+    const overlay  = document.getElementById('sidebarOverlay');
+    const isOpen   = sidebar.classList.toggle('open');
+    overlay.classList.toggle('visible', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+// ── Active link highlight ─────────────────
+document.querySelectorAll('.sidebar-link').forEach(link => {
+    if (link.href === window.location.href) {
+        link.classList.add('active');
+    }
+});
+
+// ── Quick-access dropdowns (if on admin page) ──
+async function loadYears() {
+    const courseId = document.getElementById('courseSelect')?.value;
+    if (!courseId) return;
+    const yearSel = document.getElementById('yearSelect');
+    const secSel  = document.getElementById('sectionSelect');
+    yearSel.innerHTML = '<option value="">Select Year</option>';
+    secSel.innerHTML  = '<option value="">Select Section</option>';
+    const data = await fetch(`/get-years/${courseId}`).then(r => r.json());
+    data.years.forEach(y => yearSel.innerHTML += `<option value="${y.id}">${y.name}</option>`);
+}
+
+async function loadSections() {
+    const yearId = document.getElementById('yearSelect')?.value;
+    if (!yearId) return;
+    const secSel = document.getElementById('sectionSelect');
+    secSel.innerHTML = '<option value="">Select Section</option>';
+    const data = await fetch(`/get-sections/${yearId}`).then(r => r.json());
+    data.sections.forEach(s => secSel.innerHTML += `<option value="${s.id}">${s.name}</option>`);
+}
+
+function openSection() {
+    const id = document.getElementById('sectionSelect')?.value;
+    if (id) window.location.href = `/section/${id}`;
+}
+</script>
+
+</body>
+</html>

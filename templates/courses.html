@@ -1,0 +1,67 @@
+{% extends 'navigationAdmin.html' %}
+
+{% block extra_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='courses.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1 class="page-title">Courses</h1>
+                <p class="page-subtitle">Manage all available courses</p>
+            </div>
+            
+            <a href="/create-course-page" class="add-btn" aria-label="Add new course">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Courses Card -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2 class="card-title">All Courses</h2>
+                <span class="course-count">{{ courses|length }}</span>
+            </div>
+
+            {% if courses|length > 0 %}
+                <div class="item-list">
+                    {% for course in courses %}
+                        <a href="/course/{{ course.id }}" class="item-card">
+                            <div class="item-content">
+                                <h3 class="item-title">{{ course.name }}</h3>
+                                <p class="item-meta">Open Course</p>
+                            </div>
+                            
+                            <div class="item-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <p class="empty-message">No courses yet</p>
+                    <p class="empty-hint">Create your first course to get started</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}

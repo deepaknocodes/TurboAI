@@ -1,0 +1,204 @@
+/* =============================================
+   Turbo AI — Home Page
+   Palette: Octet AI Algorithms
+   Fonts: Syne + DM Sans
+============================================= */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --white:      #FEFEFE;
+    --crystal:    #EFEFEF;
+    --titanium:   #E4E4E4;
+    --disco:      #D5D5D5;
+    --violet:     #B8ACC0;
+    --mauve:      #7F7385;
+
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--crystal);
+    font-family: var(--font-body);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Subtle dot-grid background ─────────── */
+.bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+        radial-gradient(circle, var(--disco) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* Soft vignette over the grid */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+        transparent 30%,
+        rgba(239,239,239,0.75) 100%);
+    pointer-events: none;
+}
+
+/* ── Card ───────────────────────────────── */
+.home-container {
+    position: relative;
+    z-index: 10;
+    width: 420px;
+    background: var(--white);
+    border: 1px solid var(--disco);
+    border-radius: 32px;
+    padding: 52px 44px 40px;
+    text-align: center;
+    box-shadow:
+        0 2px 0 var(--titanium),
+        0 12px 40px rgba(127,115,133,0.12),
+        0 40px 80px rgba(127,115,133,0.08);
+    animation: cardIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ── Logo mark ──────────────────────────── */
+.logo-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--mauve), var(--violet));
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 22px rgba(127,115,133,0.28);
+    animation: cardIn 0.55s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Title ──────────────────────────────── */
+.home-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: #2a2530;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    animation: cardIn 0.55s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-title em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--mauve), var(--violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Subtext ────────────────────────────── */
+.home-sub {
+    font-size: 14.5px;
+    color: #a09aa6;
+    font-weight: 300;
+    line-height: 1.6;
+    animation: cardIn 0.55s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Divider ────────────────────────────── */
+.home-divider {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--mauve), var(--violet));
+    border-radius: 2px;
+    margin: 28px auto;
+    animation: cardIn 0.55s 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Buttons ────────────────────────────── */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: cardIn 0.55s 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 15px 22px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.btn--primary {
+    background: linear-gradient(135deg, var(--mauve), #9b8fa5);
+    color: white;
+    box-shadow: 0 6px 18px rgba(127,115,133,0.28);
+}
+
+.btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(127,115,133,0.35);
+    opacity: 0.92;
+}
+
+.btn--secondary {
+    background: var(--crystal);
+    color: var(--mauve);
+    border: 1px solid var(--disco);
+}
+
+.btn--secondary:hover {
+    background: var(--titanium);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(127,115,133,0.1);
+}
+
+/* ── Footer note ────────────────────────── */
+.home-note {
+    margin-top: 24px;
+    font-size: 12px;
+    color: #c0bac5;
+    font-weight: 300;
+    animation: cardIn 0.55s 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Responsive ─────────────────────────── */
+@media (max-width: 480px) {
+    .home-container {
+        width: 92%;
+        padding: 40px 28px 32px;
+        border-radius: 26px;
+    }
+
+    .home-title { font-size: 34px; }
+}

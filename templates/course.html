@@ -1,0 +1,113 @@
+{% extends 'navigationAdmin.html' %}
+
+{% block extra_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='course.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1 class="page-title">{{ course.name }}</h1>
+                <p class="page-subtitle">Manage years and sections</p>
+            </div>
+            
+            <div class="admin-greeting">
+                <div class="greeting-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <span>Welcome, <strong>{{ username }}</strong></span>
+            </div>
+        </div>
+
+        <!-- Add Year Section -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2 class="card-title">Add Year</h2>
+            </div>
+
+            <form method="POST" action="/create-year" class="year-form">
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+                
+                <div class="input-group">
+                    <label for="year-select" class="input-label">Select Academic Year</label>
+                    <div class="select-wrap">
+                        <svg class="select-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        <select id="year-select" name="year" class="select-field" required>
+                            <option value="">Select Year</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Add Year</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Years List Section -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2 class="card-title">Years</h2>
+                <span class="item-count">{{ years|length }}</span>
+            </div>
+
+            {% if years|length > 0 %}
+                <div class="item-list">
+                    {% for year in years %}
+                        <a href="/year/{{ year.id }}" class="item-card">
+                            <div class="item-content">
+                                <div class="item-icon-badge">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="item-title">{{ year.name }}</h3>
+                                    <p class="item-meta">Academic Year</p>
+                                </div>
+                            </div>
+                            
+                            <div class="item-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <p class="empty-message">No years added yet</p>
+                    <p class="empty-hint">Create your first academic year to get started</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}

@@ -1,0 +1,188 @@
+{% extends 'navigationAdmin.html' %}
+{% block extra_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='updation.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="update-wrapper">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="/timetable" class="breadcrumb-link">
+                    <i data-feather="calendar" class="breadcrumb-icon"></i>
+                    Timetable
+                </a>
+                <i data-feather="chevron-right" class="breadcrumb-sep"></i>
+                <span class="breadcrumb-current">Edit Slot</span>
+            </div>
+            <h1 class="page-title">Update Timetable</h1>
+            <p class="page-subtitle">Modify the class details for this scheduled slot</p>
+        </div>
+
+        <div class="slot-badge">
+            <i data-feather="clock" class="slot-badge-icon"></i>
+            <div>
+                <span class="slot-badge-label">Editing Slot</span>
+                <span class="slot-badge-value">#{{ timetable.id }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="update-card">
+
+        <!-- Card Header -->
+        <div class="card-header">
+            <div class="card-header-left">
+                <div class="card-icon">
+                    <i data-feather="edit-3"></i>
+                </div>
+                <div>
+                    <h2 class="card-title">Slot Details</h2>
+                    <p class="card-subtitle">Fill in the updated information below</p>
+                </div>
+            </div>
+            <span class="card-badge">Edit Mode</span>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" action="/update/{{ timetable.id }}" class="update-form">
+
+            <!-- Row: Subject + Teacher -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label class="input-label" for="subject">
+                        <i data-feather="book-open" class="label-icon"></i>
+                        Subject
+                    </label>
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            class="input-field"
+                            value="{{ timetable.subject }}"
+                            placeholder="e.g. Mathematics"
+                            required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="teacher">
+                        <i data-feather="user" class="label-icon"></i>
+                        Teacher
+                    </label>
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="teacher"
+                            name="teacher"
+                            class="input-field"
+                            value="{{ timetable.teacher }}"
+                            placeholder="e.g. Dr. Sharma"
+                            required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row: Start Time + End Time -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label class="input-label" for="start_time">
+                        <i data-feather="play-circle" class="label-icon"></i>
+                        Start Time
+                    </label>
+                    <div class="input-wrap">
+                        <input
+                            type="time"
+                            id="start_time"
+                            name="start_time"
+                            class="input-field input-time"
+                            value="{{ timetable.start_time }}"
+                            required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="end_time">
+                        <i data-feather="stop-circle" class="label-icon"></i>
+                        End Time
+                    </label>
+                    <div class="input-wrap">
+                        <input
+                            type="time"
+                            id="end_time"
+                            name="end_time"
+                            class="input-field input-time"
+                            value="{{ timetable.end_time }}"
+                            required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row: Room + Day -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label class="input-label" for="room">
+                        <i data-feather="map-pin" class="label-icon"></i>
+                        Room Number
+                    </label>
+                    <div class="input-wrap">
+                        <input
+                            type="text"
+                            id="room"
+                            name="room"
+                            class="input-field"
+                            value="{{ timetable.room }}"
+                            placeholder="e.g. A-204"
+                            required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="day">
+                        <i data-feather="calendar" class="label-icon"></i>
+                        Day
+                    </label>
+                    <div class="select-wrap">
+                        <select id="day" name="day" class="select-field" required>
+                            {% for d in ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"] %}
+                            <option value="{{ d }}" {% if timetable.day == d %}selected{% endif %}>{{ d }}</option>
+                            {% endfor %}
+                        </select>
+                        <i data-feather="chevron-down" class="select-caret"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="form-divider"></div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <a href="/timetable" class="cancel-btn">
+                    <i data-feather="x"></i>
+                    Cancel
+                </a>
+                <button type="submit" class="submit-btn">
+                    <i data-feather="save"></i>
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    feather.replace();
+</script>
+{% endblock body %}

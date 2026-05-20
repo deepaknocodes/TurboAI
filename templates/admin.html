@@ -1,0 +1,201 @@
+{% extends 'navigationAdmin.html' %}
+{% block body %}
+
+<div class="main-content">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+        <div class="header-left">
+            <p class="header-eyebrow">Good day,</p>
+            <h1 class="header-title">{{ username }} <span class="title-accent">✦</span></h1>
+            <p class="header-sub">Here's what's happening in your college today.</p>
+        </div>
+        <div class="header-badge">
+            <div class="badge-dot"></div>
+            Admin Portal
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Total Courses</span>
+                <span class="stat-value">{{ courses|length }}</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Total Teachers</span>
+                <span class="stat-value">{{ teachers|length }}</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Total Students</span>
+                <span class="stat-value">{{ students_count }}</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Total Sections</span>
+                <span class="stat-value">{{ sections|length }}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="section-label">Quick Actions</div>
+    <div class="quick-actions">
+
+        <a href="/fees" class="qa-card">
+            <div class="qa-icon qa-icon--violet">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+            <div class="qa-body">
+                <h3>Fee Management</h3>
+                <p>Manage fee structure for all courses and years</p>
+            </div>
+            <div class="qa-arrow">→</div>
+        </a>
+
+        <a href="/courses" class="qa-card">
+            <div class="qa-icon qa-icon--mauve">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            </div>
+            <div class="qa-body">
+                <h3>Courses</h3>
+                <p>Create and manage courses, years and sections</p>
+            </div>
+            <div class="qa-arrow">→</div>
+        </a>
+
+        <a href="/teachers" class="qa-card">
+            <div class="qa-icon qa-icon--violet">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="qa-body">
+                <h3>Teachers</h3>
+                <p>View and manage all teachers and timetables</p>
+            </div>
+            <div class="qa-arrow">→</div>
+        </a>
+
+        <a href="/logout" class="qa-card qa-card--logout">
+            <div class="qa-icon qa-icon--soft">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </div>
+            <div class="qa-body">
+                <h3>Logout</h3>
+                <p>Exit admin dashboard safely</p>
+            </div>
+            <div class="qa-arrow">→</div>
+        </a>
+
+    </div>
+
+    <!-- BOTTOM GRID -->
+    <div class="bottom-grid">
+
+        <!-- QUICK ACCESS -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2>Quick Access</h2>
+                <p>Jump to a section directly</p>
+            </div>
+            <form id="quickForm">
+                <select id="courseSelect" onchange="loadYears()">
+                    <option value="">Select Course</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+                <select id="yearSelect" onchange="loadSections()">
+                    <option value="">Select Year</option>
+                </select>
+                <select id="sectionSelect">
+                    <option value="">Select Section</option>
+                </select>
+                <button type="button" onclick="openSection()">
+                    Open Section →
+                </button>
+            </form>
+        </div>
+
+        <!-- COURSES LIST -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2>Courses</h2>
+                <a href="/create-course-page" class="card-add-btn">+ Add</a>
+            </div>
+            <div class="item-list">
+                {% for course in courses %}
+                <a href="/course/{{ course.id }}" class="item-card">
+                    <div class="item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                    </div>
+                    <div class="item-text">
+                        <h3>{{ course.name }}</h3>
+                        <p>Open Course</p>
+                    </div>
+                    <span class="item-arrow">→</span>
+                </a>
+                {% else %}
+                <p class="empty-message">No courses yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+async function loadYears() {
+    const courseId = document.getElementById('courseSelect').value;
+    const yearSel  = document.getElementById('yearSelect');
+    const secSel   = document.getElementById('sectionSelect');
+    yearSel.innerHTML = '<option value="">Select Year</option>';
+    secSel.innerHTML  = '<option value="">Select Section</option>';
+    if (!courseId) return;
+    const res  = await fetch(`/get-years/${courseId}`);
+    const data = await res.json();
+    data.years.forEach(y => {
+        yearSel.innerHTML += `<option value="${y.id}">${y.name}</option>`;
+    });
+}
+async function loadSections() {
+    const yearId = document.getElementById('yearSelect').value;
+    const secSel = document.getElementById('sectionSelect');
+    secSel.innerHTML = '<option value="">Select Section</option>';
+    if (!yearId) return;
+    const res  = await fetch(`/get-sections/${yearId}`);
+    const data = await res.json();
+    data.sections.forEach(s => {
+        secSel.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+    });
+}
+function openSection() {
+    const id = document.getElementById('sectionSelect').value;
+    if (id) window.location.href = `/section/${id}`;
+}
+</script>
+
+{% endblock body %}

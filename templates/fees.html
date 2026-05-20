@@ -1,0 +1,294 @@
+{% extends 'navigationAdmin.html' %}
+{% block body %}
+
+<div class="main-content">
+
+
+
+    <!-- ===================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================== -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+
+                Fee Management
+
+            </h1>
+
+            <p>
+
+                Manage fee structure for courses and years
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ===================================== -->
+    <!-- ADD FEE STRUCTURE -->
+    <!-- ===================================== -->
+
+    <div class="dashboard-card">
+
+        <h2>
+
+            Add Fee Structure
+
+        </h2>
+
+        <p>
+
+            Set fees according to course and year
+
+        </p>
+
+
+
+
+
+        <form method="POST"
+              action="/add-fee-structure">
+
+
+
+            <!-- COURSE -->
+
+            <select id="courseSelect"
+                    name="course_id"
+                    required>
+
+                <option value="">
+
+                    Select Course
+
+                </option>
+
+                {% for course in courses %}
+
+                <option value="{{ course.id }}">
+
+                    {{ course.name }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+
+
+
+            <!-- YEAR -->
+
+            <select id="yearSelect"
+                    name="year_id"
+                    required>
+
+                <option value="">
+
+                    Select Year
+
+                </option>
+
+            </select>
+
+
+
+
+
+            <!-- AMOUNT -->
+
+            <input type="number"
+                   name="amount"
+                   placeholder="Enter Fee Amount"
+                   required>
+
+
+
+
+
+            <button type="submit">
+
+                Save Fee Structure
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+
+
+    <!-- ===================================== -->
+    <!-- FEE TABLE -->
+    <!-- ===================================== -->
+
+    <div class="table-container">
+
+        <h2>
+
+            Fee Structures
+
+        </h2>
+
+
+
+
+
+        {% if fees %}
+
+        <table>
+
+            <tr>
+
+                <th>
+
+                    Course
+
+                </th>
+
+                <th>
+
+                    Year
+
+                </th>
+
+                <th>
+
+                    Fee Amount
+
+                </th>
+
+            </tr>
+
+
+
+
+
+            {% for fee in fees %}
+
+            <tr>
+
+                <td>
+
+                    {% for course in courses %}
+
+                        {% if course.id == fee.course_id %}
+
+                            {{ course.name }}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </td>
+
+
+
+
+
+                <td>
+
+                    {% for year in years %}
+
+                        {% if year.id == fee.year_id %}
+
+                            {{ year.name }}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </td>
+
+
+
+
+
+                <td>
+
+                    ₹{{ fee.amount }}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+
+
+
+        {% else %}
+
+        <div class="empty-message">
+
+            No fee structures added yet
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- ===================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================== -->
+
+<script>
+
+const courseSelect =
+document.getElementById("courseSelect")
+
+const yearSelect =
+document.getElementById("yearSelect")
+
+
+
+/* LOAD YEARS */
+
+courseSelect.addEventListener("change", function(){
+
+    let courseId = this.value
+
+    yearSelect.innerHTML =
+    `<option value="">Select Year</option>`
+
+    {% for year in years %}
+
+    if(courseId == "{{ year.course_id }}"){
+
+        yearSelect.innerHTML += `
+        <option value="{{ year.id }}">
+            {{ year.name }}
+        </option>
+        `
+    }
+
+    {% endfor %}
+
+})
+
+</script>
+
+{% endblock body %}
